@@ -42,6 +42,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'crispy_forms',
     'blog.apps.BlogConfig',
+    'dash.apps.DashConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -67,7 +68,9 @@ ROOT_URLCONF = 'django_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR + '/templates/',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
