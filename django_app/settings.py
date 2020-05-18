@@ -40,9 +40,11 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'channels_redis',
     'crispy_forms',
     'blog.apps.BlogConfig',
-    'dash.apps.DashConfig',
+    'mydash.apps.DashConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+
     'storages'
 ]
 
@@ -83,8 +87,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_app.wsgi.application'
+#WSGI_APPLICATION = 'django_app.wsgi.application'
+ASGI_APPLICATION = 'django_app.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1, 6379'),],
+        }
+    }
+
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -137,7 +151,19 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT= os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django_plotly_dash.finders.DashAssetFinder',
+    'django_plotly_dash.finders.DashComponentFinder',
+]
 
+PLOTLY_COMPONENTS = [
+    'dash_core_components',
+    'dash_html_components',
+    'dash_renderer',
+    'dpd_components'
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -154,6 +180,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 

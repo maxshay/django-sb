@@ -1,8 +1,17 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 
+    <div id="loader" class="text-center w-100">Loading...</div>
+
+    <div id="blog-section" class="d-none w-100">
+
+
     <h1 class="d-inline-block">Blog Home</h1>
     <p class="d-inline-block ml-3">:)</p>
+
+
+
+
     <!--  posts  -->
     {% for post in posts %}
 
@@ -43,5 +52,25 @@
 
 
     {% endif %}
+
+
+
+    </div>
+
+
+    <script>
+
+
+        let blog = document.getElementById("blog-section")
+        let loader = document.getElementById("loader")
+
+        setTimeout(function() {
+            loader.classList.add("d-none");
+            blog.classList.remove("d-none");
+            blog.classList.add("my-fade-in");
+
+        }, 3000);
+
+    </script>
 
 {% endblock content %}
