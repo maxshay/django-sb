@@ -1,7 +1,10 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 
-    <div id="loader" class="text-center w-100">Loading...</div>
+
+
+    <div id="loader-container" class="w-100 text-center mt-5"><div id="loader" class=""></div></div>
+
 
     <div id="blog-section" class="d-none w-100">
 
@@ -26,7 +29,6 @@
                 <p class="article-content">{{ post.content }}</p>
             </div>
         </article>
-
 
     <!--  pagination  -->
     {% endfor %}
@@ -57,12 +59,12 @@
 
     </div>
 
-
+    {% block javscript %}
     <script>
 
 
         let blog = document.getElementById("blog-section")
-        let loader = document.getElementById("loader")
+        let loader = document.getElementById("loader-container")
 
         setTimeout(function() {
             loader.classList.add("d-none");
@@ -72,5 +74,6 @@
         }, 3000);
 
     </script>
+    {% endblock javscript %}
 
 {% endblock content %}

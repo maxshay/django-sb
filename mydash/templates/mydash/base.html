@@ -23,8 +23,7 @@
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-
+    {% include "mydash/scripts.html" %}
 </head>
 
 <body id="page-top">
@@ -34,30 +33,22 @@
 
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <div id="content" style="overflow-y:scroll;overflow-x:hidden">
-
+            <div id="content" style="overflow-x:hidden">
                 <div class="container-fluid">
-
-                    <div class="d-sm-flex align-items-center justify-content-between my-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    <div class="d-sm-flex align-items-center my-4">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-center">
+                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <a href="#" class=" d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
                     </div>
                     {% block content %}{% endblock %}
-
                 </div>
             </div>
         </div>
     </div>
-
-
-    {% include "mydash/scripts.html" %}
-
-
-
-
-
-
-
 
 
 </body>

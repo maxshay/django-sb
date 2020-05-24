@@ -1,20 +1,120 @@
 {% extends 'mydash/base.html' %}
 {% load static %}
 {% block content %}
-    {% load plotly_dash %}
-    <div class="row mb-5" >
-        <div class="{% plotly_class name='SimpleExample' %} card w-50 h-100" >
-            {% plotly_app name='SimpleExample' ratio=0.45 %}
+<!-- HAVING SOME ISSUES WITH PLOTLY BE BACK IN A MINUTE -->
+<!--    {% load plotly_dash %}-->
+<!--    <div class="row mb-5" >-->
+<!--        <div class="{% plotly_class name='SimpleExample' %} card w-50 h-100" >-->
+<!--            {% plotly_app name='SimpleExample' ratio=0.45 %}-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+    <div class="row" >
+        <div class="col-4 d-flex justify-content-center">
+            <div class="card-container" style="width: 300px">
+
+                <div class="card">
+                    <div id="quote-otd" class="card-body">
+                        <div id="loader-container-card" class="text-center my-5"><div id="loader" class=""></div></div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-4 " style="background: dark-grey">
+            {{ plot | safe }}
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div id="plotly-async" class="col-4 offset-4">
+            <div id="loader-container-graph" class="text-center mt-5"><div id="loader" class=""></div></div>
         </div>
     </div>
 
+    <script>
 
-    <div class="row mb-5" >
+        var ajaxes  = [
+            {
+                url: "{% url 'get-test2' %}",
+                appendto: "#quote-otd",
+                loaderid: "loader-container-card"
+            },
+            {
+                url: "{% url 'get-test' %}",
+                appendto: "#plotly-async",
+                loaderid: "loader-container-graph"
+            }
+        ];
+        var current = 0;
 
-        {{ plot | safe }}
-    </div>
+        function do_ajax() {
+            if (current < ajaxes.length) {
+                $.ajax({
+                    url: ajaxes[current].url,
+                    type: 'get',
+                    success: function(data) {
+                        var loader = document.getElementById(ajaxes[current].loaderid);
+                        loader.classList.add("d-none");
+                        if (ajaxes[current].appendto == "#quote-otd") {
+                            $(ajaxes[current].appendto).append(
+                                "<h5 class='card-title'>Donald's Quote of the Day.</h5>"
+                               +"<p class='card-text'>" + data + "</p>"
+                               +"<a href='#' class='card-link'>Card link</a>"
+                               +"<a href='#' class='card-link'>Another link</a>"
+                            );
+                        }
+                        if (ajaxes[current].appendto == "#plotly-async") {
+                            $(ajaxes[current].appendto).append(data);
+                        }
+                    },
+                    failure: function(data) {
+                        $(ajaxes[current].appendto).append('<div>Sorry, there was an issue with the url.</div>');
+                    },
+
+                    complete: function() {
+                        current++;
+                        do_ajax();
+                    }
+                });
+            }
+        }
 
 
+
+        $(document).ready(function() {
+            do_ajax()
+        });
+
+
+
+
+
+<!--        $.ajax({-->
+<!--            url: "{% url 'get-test' %}",-->
+<!--            type: 'get',-->
+<!--            success: function(data) {-->
+<!--                loader.classList.add("d-none");-->
+<!--                $('#plotly-async').append(data);-->
+<!--            },-->
+<!--            failure: function(data) {-->
+<!--                $('#plotly-async').append('<div>Sorry, there was an issue with the data.</div>');-->
+<!--            }-->
+<!--        });-->
+
+    </script>
 
 
 {% endblock %}
+
+<!--
+<h5 class="card-title">Card title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+-->
