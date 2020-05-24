@@ -1,1 +1,1 @@
-web: gunicorn django_app.asgi
+daphne -p 8001 django_app.asgi:application

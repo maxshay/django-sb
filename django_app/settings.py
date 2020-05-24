@@ -33,7 +33,8 @@ DEBUG = os.environ['DEBUG_VALUE']
 
 ALLOWED_HOSTS = [
     'django-blog-app-ms.herokuapp.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    'localhost'
 ]
 
 
