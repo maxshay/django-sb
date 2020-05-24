@@ -1,1 +1,1 @@
-web: daphne -p 8001 django_app.asgi:application
+web: daphne django_app.asgi:application --port 8001 --bind 0.0.0.0 -v2
