@@ -8,7 +8,7 @@ boto==2.49.0
 boto3==1.12.49
 botocore==1.15.49
 Brotli==1.0.7
-certifi==2020.4.5.1
+certifi==2022.12.7
 cffi==1.14.0
 channels==2.4.0
 channels-redis==2.4.2
